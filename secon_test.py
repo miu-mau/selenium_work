@@ -15,27 +15,29 @@ def test_click_carousel_and_logo(driver):
     driver.get("http://localhost:8082")
     time.sleep(2)
 
-
     driver.find_element(By.CLASS_NAME, "carousel-inner").click()
     time.sleep(2)
 
     driver.find_element(By.ID, "logo").click()
     time.sleep(2)
 
+    assert driver.current_url == "http://127.0.0.1:8082/en-gb?route=common/home", "URL did not match after clicking logo"
+
 def test_change_currency(driver):
     driver.get("http://localhost:8082")
     time.sleep(2)
-
 
     driver.find_element(By.CSS_SELECTOR, ".fa-solid.fa-caret-down").click()
     time.sleep(1)
     driver.find_element(By.XPATH, "//a[@href='EUR']").click()
     time.sleep(2)
-
+    euro = driver.find_element(By.XPATH, "//a[@href='EUR']")
     driver.find_element(By.CSS_SELECTOR, ".fa-solid.fa-caret-down").click()
     time.sleep(1)
     driver.find_element(By.XPATH, "//a[@href='USD']").click()
     time.sleep(2)
+
+    assert driver.find_element(By.XPATH, "//a[@href='USD']") != euro, "Currency did not change to Dollar"
 
 def test_navigate_to_software_catalog(driver):
     driver.get("http://localhost:8082")
@@ -43,6 +45,9 @@ def test_navigate_to_software_catalog(driver):
 
     driver.find_element(By.XPATH, "//a[@href='http://127.0.0.1:8082/en-gb/catalog/software']").click()
     time.sleep(2)
+
+    assert driver.current_url == "http://127.0.0.1:8082/en-gb/catalog/software", "URL did not match after navigating to software catalog"
+
     driver.find_element(By.ID, "logo").click()
     time.sleep(2)
 
@@ -65,9 +70,13 @@ def test_register_new_user(driver):
     driver.find_element(By.NAME, "agree").click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR, ".col-3.d-none.d-md-block").click()
+
+    assert "Your Account Has Been Created!" in driver.page_source, "Registration was not successful"
+
     time.sleep(2)
     driver.find_element(By.ID, "logo").click()
     time.sleep(2)
+
 
 def test_search_for_item(driver):
     driver.get("http://localhost:8082")
@@ -77,6 +86,9 @@ def test_search_for_item(driver):
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR, ".btn.btn-light.btn-lg").click()
     time.sleep(2)
+
+    assert driver.find_element(By.ID, "content"), "No search results were found"
+    
     driver.find_element(By.ID, "logo").click()
     time.sleep(2)
 
