@@ -1,32 +1,5 @@
 import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from page.Home_page import HomePage
-from page.Product_page import ProductPage
-from page.Review_page import ReviewPage
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
-
-@pytest.fixture(scope="module")
-def driver():
-    service = Service(executable_path="C:\\Users\\marin\\Documents\\chromedriver.exe")
-    driver = webdriver.Chrome(service=service)
-    yield driver
-    driver.quit()
-
-@pytest.fixture
-def pages(driver):
-    home_page = HomePage(driver)
-    product_page = ProductPage(driver)
-    review_page = ReviewPage(driver)
-    return home_page, product_page, review_page
-
-@pytest.fixture(autouse=True)
-def setup(pages):
-    home_page, _, _ = pages
-    home_page.navigate_to_product("http://localhost:8082")
 
 def test_add_macbook_to_wishlist(pages):
     home_page, product_page, _ = pages
