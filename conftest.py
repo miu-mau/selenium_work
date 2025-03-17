@@ -9,7 +9,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox"])
     parser.addoption("--headless", action="store_true")
-    parser.addoption("--executor", action="store", default="127.0.0.1:4444")  # Default to Selenium Grid
+    parser.addoption("--executor", action="store", default="127.0.0.1:4444")
     parser.addoption("--log_level", action="store", default="INFO")
 
 @pytest.fixture(scope="module")
@@ -30,7 +30,6 @@ def driver(request):
     else:
         raise NotImplementedError(f"Browser {browser_name} is not implemented.")
 
-    # Attach browser capabilities to Allure report
     allure.attach(
         name=browser.session_id,
         body=json.dumps(browser.capabilities),
@@ -40,18 +39,20 @@ def driver(request):
     yield browser
     browser.quit()
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def pages(driver):
     from page.Home_page import HomePage
     from page.Product_page import ProductPage
     from page.Review_page import ReviewPage
+    from page.Login_page import LoginPage
 
     home_page = HomePage(driver)
     product_page = ProductPage(driver)
     review_page = ReviewPage(driver)
-    return home_page, product_page, review_page
+    login_page = LoginPage(driver)
+    return home_page, product_page, review_page, login_page
 
-@pytest.fixture(autouse=True)
-def setup(pages):
-    home_page, _, _ = pages
+@pytest.fixture(scope="module", autouse=True)
+def setup(driver, pages):
+    home_page, _, _, _ = pages
     home_page.navigate_to_product("http://localhost:8082")
