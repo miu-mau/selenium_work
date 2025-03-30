@@ -1,6 +1,5 @@
 from .Base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 import time
 
 class HomePage(BasePage):
@@ -52,3 +51,13 @@ class HomePage(BasePage):
             if image.get_attribute("title") == product_title:
                 add_to_cart_button = product.find_element(By.XPATH, ".//button[@data-bs-toggle='tooltip' and @title='Add to Cart']")
                 add_to_cart_button.click()
+
+    def search(self, search_term):
+        self.send_keys(By.CSS_SELECTOR, ".form-control.form-control-lg", search_term)
+        self.click(By.CSS_SELECTOR, ".btn.btn-light.btn-lg") 
+        time.sleep(1)
+
+    def change_currency(self, currency):
+        self.click(By.CSS_SELECTOR, ".fa-solid.fa-caret-down")
+        self.click(By.XPATH, f"//a[@href='{currency}']")
+        time.sleep(1)

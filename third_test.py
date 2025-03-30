@@ -14,6 +14,8 @@ def test_login(pages, email, password):
 
     home_page.click_logo()
 
+
+
 def test_add_macbook_to_wishlist(pages):
     home_page, product_page, _, _ = pages
     home_page.scroll_down(300)

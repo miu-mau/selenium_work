@@ -95,3 +95,26 @@ def test_search_for_item(driver):
 
 if __name__ == "__main__":
     pytest.main()
+
+
+
+
+# def test_change_currency(pages):
+#     home_page, _, _, _ = pages
+
+#     home_page.change_currency("EUR")
+#     time.sleep(2)
+#     home_page.change_currency("USD")
+#     time.sleep(2)
+
+#     current_currency = home_page.driver.find_element(By.XPATH, "//a[@href='USD']")
+#     assert current_currency is not None, "Currency did not change to Dollar"
+
+# def test_search(pages):
+#     home_page, _, _, _ = pages
+
+#     home_page.search("Search")
+#     time.sleep(2)
+
+#     search_results = home_page.driver.find_elements(By.ID, "content")
+#     assert search_results, "No search results were found"
