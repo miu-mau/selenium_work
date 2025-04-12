@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 
 @pytest.mark.parametrize("email, password", [("lala@gmail.com", "password")])
 def test_login(pages, email, password):
-    home_page, _, _, login_page = pages
+    home_page, _, _, login_page, _ = pages
     login_page.login(email, password)
     time.sleep(2)
     
@@ -17,7 +17,7 @@ def test_login(pages, email, password):
 
 
 def test_add_macbook_to_wishlist(pages):
-    home_page, product_page, _, _ = pages
+    home_page, product_page, _, _, _ = pages
     home_page.scroll_down(300)
     time.sleep(2)
     product_page.select_prod("MacBook")
@@ -33,7 +33,7 @@ def test_add_macbook_to_wishlist(pages):
 
 
 def test_add_canon_to_cart(pages):
-    home_page, product_page, _, _ = pages
+    home_page, product_page, _, _, _ = pages
     home_page.click_logo()
     home_page.scroll_down(1000)
     time.sleep(2)
@@ -53,7 +53,7 @@ def test_add_canon_to_cart(pages):
 
 
 def test_add_samsung_tablet_to_cart(pages):
-    home_page, _, _, _ = pages
+    home_page, _, _, _, _ = pages
     home_page.click_catalog("tablet")
     time.sleep(1)
     home_page.scroll_down(200)
@@ -70,7 +70,7 @@ def test_add_samsung_tablet_to_cart(pages):
 
 
 def test_add_htc_to_cart(pages):
-    home_page, _, _, _ = pages
+    home_page, _, _, _, _ = pages
     home_page.click_catalog("smartphone")
     time.sleep(1)
     home_page.scroll_down(200)
@@ -88,7 +88,7 @@ def test_add_htc_to_cart(pages):
 
 
 def test_write_review_for_iphone(pages):
-    home_page, product_page, review_page, _ = pages
+    home_page, product_page, review_page, _, _ = pages
     home_page.click_catalog("smartphone")   
     product_page.select_prod("iPhone")
     home_page.scroll_down(500)

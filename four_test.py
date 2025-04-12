@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 @allure.feature("User  Authentication")
 @allure.title("User  Login")
 def test_login(pages):
-    home_page, _, _, login_page = pages
+    home_page, _, _, login_page, _ = pages
     login_page.login("lala@gmail.com", "password")
     time.sleep(2)
     
@@ -18,7 +18,7 @@ def test_login(pages):
 @allure.feature("Wishlist")
 @allure.title("Add MacBook to Wishlist")
 def test_add_macbook_to_wishlist(pages):
-    home_page, product_page, _, _ = pages
+    home_page, product_page, _, _, _ = pages
     home_page.scroll_down(300)
     time.sleep(2)
     product_page.select_prod("MacBook")
@@ -35,7 +35,7 @@ def test_add_macbook_to_wishlist(pages):
 @allure.story("Add Canon to Cart")
 @allure.title("Add Canon EOS 5D to Cart")
 def test_add_canon_to_cart(pages):
-    home_page, product_page, _, _ = pages
+    home_page, product_page, _, _, _ = pages
     home_page.click_logo()
     home_page.scroll_down(1000)
     time.sleep(2)
@@ -57,7 +57,7 @@ def test_add_canon_to_cart(pages):
 @allure.story("Add Samsung Tablet to Cart")
 @allure.title("Add Samsung Galaxy Tab 10.1 to Cart")
 def test_add_samsung_tablet_to_cart(pages):
-    home_page, _, _, _ = pages
+    home_page, _, _, _, _  = pages
     home_page.click_catalog("tablet")
     time.sleep(1)
     home_page.scroll_down(200)
@@ -76,7 +76,7 @@ def test_add_samsung_tablet_to_cart(pages):
 @allure.story("Add HTC to Cart")
 @allure.title("Add HTC Touch HD to Cart")
 def test_add_htc_to_cart(pages):
-    home_page, _, _, _ = pages
+    home_page, _, _, _, _ = pages
     home_page.click_catalog("smartphone")
     time.sleep(1)
     home_page.scroll_down(200)
@@ -97,7 +97,7 @@ def test_add_htc_to_cart(pages):
 @allure.story("Write Review for iPhone")
 @allure.title("Write a review for iPhone")
 def test_write_review_for_iphone(pages):
-    home_page, product_page, review_page, _ = pages
+    home_page, product_page, review_page, _, _ = pages
     home_page.click_catalog("smartphone")   
     product_page.select_prod("iPhone")
     home_page.scroll_down(500)

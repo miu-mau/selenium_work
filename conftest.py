@@ -45,14 +45,20 @@ def pages(driver):
     from page.Product_page import ProductPage
     from page.Review_page import ReviewPage
     from page.Login_page import LoginPage
+    from page.Admin_page import AdminPage
 
     home_page = HomePage(driver)
     product_page = ProductPage(driver)
     review_page = ReviewPage(driver)
     login_page = LoginPage(driver)
-    return home_page, product_page, review_page, login_page
+    admin_page = AdminPage(driver)
+    return home_page, product_page, review_page, login_page, admin_page
 
-@pytest.fixture(scope="module", autouse=True)
-def setup(driver, pages):
-    home_page, _, _, _ = pages
-    home_page.navigate_to_product("http://localhost:8082")
+@pytest.fixture(scope="function", autouse=True)
+def setup(driver, pages, request):
+    home_page, _, _, _, admin_page = pages
+
+    if "admin" in request.keywords:
+        admin_page.navigate_to_admin("http://127.0.0.1:8082/administration/index.php?route=common/login")
+    else:
+        home_page.navigate_to_product("http://localhost:8082")
