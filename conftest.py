@@ -54,11 +54,23 @@ def pages(driver):
     admin_page = AdminPage(driver)
     return home_page, product_page, review_page, login_page, admin_page
 
+
+@pytest.fixture(scope="function")
+def page_to_open(request):
+    return request.param
+
+
 @pytest.fixture(scope="function", autouse=True)
-def setup(driver, pages, request):
+def setup(driver, pages, page_to_open):
     home_page, _, _, _, admin_page = pages
 
-    if "admin" in request.keywords:
-        admin_page.navigate_to_admin("http://127.0.0.1:8082/administration/index.php?route=common/login")
-    else:
+    if page_to_open == "home":
         home_page.navigate_to_product("http://localhost:8082")
+    if page_to_open == "admin":
+        admin_page.navigate_to_admin("http://127.0.0.1:8082/administration/index.php?route=common/login")
+
+# for latest test; up to five_test
+# @pytest.fixture(scope="module", autouse=True)
+# def setup(driver, pages):
+#     home_page, _, _, _, _ = pages
+#     home_page.navigate_to_product("http://localhost:8082")
