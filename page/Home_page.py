@@ -56,6 +56,7 @@ class HomePage(BasePage):
         self.send_keys(By.CSS_SELECTOR, ".form-control.form-control-lg", search_term)
         self.click(By.CSS_SELECTOR, ".btn.btn-light.btn-lg") 
         time.sleep(1)
+        self.driver.find_element(By.CSS_SELECTOR, ".form-control.form-control-lg").clear()
 
     def change_currency(self, currency):
         self.click(By.CSS_SELECTOR, ".fa-solid.fa-caret-down")

@@ -89,4 +89,32 @@ class AdminPage(BasePage):
         time.sleep(1)      
         self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary").click()   
         time.sleep(1)
-        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-light").click()    
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-light").click()   
+
+    def page_select(self, num):
+        self.driver.execute_script("window.scrollTo(0, 600);")
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, f"//li[contains(@class, 'page-item')]/a[text()='{num}']").click()
+        time.sleep(1)
+        # self.driver.execute_script("window.scrollTo(200, 0);")
+    
+    def select_product(self, name):
+        time.sleep(1)
+
+        rows = self.driver.find_elements(By.CSS_SELECTOR, "tbody tr")
+
+        found = False
+        for row in rows:
+            product_name_elem = row.find_element(By.CSS_SELECTOR, "td:nth-child(3)")
+            if name.strip().lower() in product_name_elem.text.strip().lower():
+                checkbox = row.find_element(By.CSS_SELECTOR, "input[type='checkbox']")
+                checkbox.click()
+
+    def delete_product(self):
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-danger").click()
+        time.sleep(1)
+        alert = self.driver.switch_to.alert
+        alert.accept()
+        time.sleep(1)
+
+
