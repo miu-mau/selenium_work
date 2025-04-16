@@ -103,7 +103,6 @@ class AdminPage(BasePage):
 
         rows = self.driver.find_elements(By.CSS_SELECTOR, "tbody tr")
 
-        found = False
         for row in rows:
             product_name_elem = row.find_element(By.CSS_SELECTOR, "td:nth-child(3)")
             if name.strip().lower() in product_name_elem.text.strip().lower():
@@ -117,4 +116,5 @@ class AdminPage(BasePage):
         alert.accept()
         time.sleep(1)
 
-
+    def back(self):
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-light").click()  
