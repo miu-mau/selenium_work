@@ -4,7 +4,7 @@ import time
 
 class ProductPage(BasePage):
     def select_prod(self, product_title):
-        products = self.driver.find_elements(By.XPATH, "//div[@class='product-thumb']")      
+        products = self.driver.find_elements(By.CSS_SELECTOR, ".product-thumb.transition")      
         for product in products:
             title_element = product.find_element(By.XPATH, ".//h4/a")
             if title_element.text == product_title:
@@ -19,6 +19,9 @@ class ProductPage(BasePage):
     #         raise IndexError("Index out of range for product selection.")
     def add_to_wishlist(self):
         self.click(By.XPATH, "//button[@formaction='http://127.0.0.1:8082/en-gb?route=account/wishlist.add']")
+
+    def add_to_wishlist_rus(self):
+        self.click(By.CSS_SELECTOR, "button[data-original-title='В закладки']")
 
     def select_color(self, color_value):
         self.click(By.ID, "input-option-226")

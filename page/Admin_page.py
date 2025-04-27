@@ -33,7 +33,7 @@ class AdminPage(BasePage):
         self.scroll_to(pixels, 0) 
 
     def navigate_to_admin(self, url):
-        self.driver.get("http://127.0.0.1:8082/administration/index.php?route=common/login")
+        self.driver.get("https://demo-opencart.ru/admin/index.php")
 
     def login(self, email, password):
         time.sleep(1)        
@@ -44,6 +44,10 @@ class AdminPage(BasePage):
     def click_navigate(self, menu_item):
         time.sleep(1)
         self.driver.find_element(By.XPATH, f"//a[@href='#collapse-{self.menu_selector[menu_item]}']").click()
+
+    def click_navigate_rus(self, menu_item):
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, f"//a[@href='#collapse{self.menu_selector[menu_item]}']").click()
 
     def click_submenu_item(self, submenu_item):
         submenu_url_part = self.submenu_selector[submenu_item]
@@ -62,6 +66,17 @@ class AdminPage(BasePage):
         time.sleep(1)
         self.driver.find_element(By.ID, "input-keyword-0-1").send_keys(name)
         time.sleep(1)
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary").click()
+
+    def add_new_category_rus(self, name):
+        self.driver.find_element(By.ID, "input-name1").send_keys(name)
+        time.sleep(1)
+        self.driver.find_element(By.ID, "input-meta-title1").send_keys(name)
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, "//a[@href='#tab-seo']").click()
+        time.sleep(1)
+        # self.driver.find_element(By.XPATH, "//input[type='text']").send_keys(name)
+        # time.sleep(1)
         self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary").click()
     
     def add_new_product(self, name, category, price):
@@ -98,6 +113,12 @@ class AdminPage(BasePage):
         time.sleep(1)
         # self.driver.execute_script("window.scrollTo(200, 0);")
     
+    def page_select_rus(self, num):
+        self.driver.execute_script("window.scrollTo(0, 600);")
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, f"//a[text()='{num}']").click()
+        time.sleep(1)
+
     def select_product(self, name):
         time.sleep(1)
 
@@ -117,4 +138,7 @@ class AdminPage(BasePage):
         time.sleep(1)
 
     def back(self):
-        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-light").click()  
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-light").click() 
+
+    def back_rus(self):
+        self.driver.find_element(By.CSS_SELECTOR, ".btn.btn-default").click()   

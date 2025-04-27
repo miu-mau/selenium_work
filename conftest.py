@@ -2,15 +2,16 @@ import pytest
 import allure
 import json
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox"])
     parser.addoption("--headless", action="store_true")
-    parser.addoption("--executor", action="store", default="127.0.0.1:4444")
+    parser.addoption("--executor", action="store", default="localhost:4444")
     parser.addoption("--log_level", action="store", default="INFO")
+
 
 @pytest.fixture(scope="module")
 def driver(request):
@@ -18,18 +19,47 @@ def driver(request):
     browser_name = request.config.getoption("--browser")
     headless = request.config.getoption("--headless")
 
+    executor_url = f"http://{executor}/wd/hub"
+
     if browser_name == "chrome":
         options = Options()
-        options.headless = headless
-        service = Service(executable_path="C:\\Users\\marin\\Documents\\chromedriver.exe")
-        browser = webdriver.Chrome(service=service, options=options)
+        if headless:
+            options.add_argument("--headless")
+            options.add_argument("--disable-gpu")
+
+        options.set_capability("browserName", "chrome")
+        options.set_capability("browserVersion", "128.0")
+        options.set_capability("selenoid:options", {
+            "enableVNC": True,
+            "enableVideo": False,
+            # "enableVideo": True,
+            # "videoName": f"{request.node.name}.mp4"
+        })
+
+        browser = webdriver.Remote(
+            command_executor=executor_url,
+            options=options
+        )
+
     elif browser_name == "firefox":
         options = FirefoxOptions()
-        options.headless = headless
-        browser = webdriver.Firefox(options=options)
-    else:
-        raise NotImplementedError(f"Browser {browser_name} is not implemented.")
+        if headless:
+            options.add_argument("--headless")
+        options.set_capability("browserName", "firefox")
+        options.set_capability("selenoid:options", {
+            "enableVNC": True,
+            "enableVideo": False
+        })
 
+        browser = webdriver.Remote(
+            command_executor=executor_url,
+            options=options
+        )
+
+    else:
+        raise NotImplementedError(f"Browser {browser_name} is not supported.")
+
+    # Allure: добавляем capabilities
     allure.attach(
         name=browser.session_id,
         body=json.dumps(browser.capabilities),
@@ -38,6 +68,7 @@ def driver(request):
 
     yield browser
     browser.quit()
+
 
 @pytest.fixture(scope="module")
 def pages(driver):
@@ -65,12 +96,10 @@ def setup(driver, pages, page_to_open):
     home_page, _, _, _, admin_page = pages
 
     if page_to_open == "home":
-        home_page.navigate_to_product("http://localhost:8082")
-    if page_to_open == "admin":
-        admin_page.navigate_to_admin("http://127.0.0.1:8082/administration/index.php?route=common/login")
-
-# for latest test; up to five_test
+        home_page.navigate_to_product("https://demo-opencart.ru/index.php")
+    elif page_to_open == "admin":
+        admin_page.navigate_to_admin("https://demo-opencart.ru/admin/index.php")
 # @pytest.fixture(scope="module", autouse=True)
 # def setup(driver, pages):
 #     home_page, _, _, _, _ = pages
-#     home_page.navigate_to_product("http://localhost:8082")
+#     home_page.navigate_to_product("https://demo-opencart.ru/index.php")
