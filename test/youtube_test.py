@@ -19,7 +19,7 @@ def driver():
     yield driver
     driver.quit()
 
-# 1️⃣ TAP тест
+
 def test_tap_search(driver):
     time.sleep(5)
     search_button = driver.find_element_by_accessibility_id("Search")
@@ -31,9 +31,9 @@ def test_tap_search(driver):
     time.sleep(2)
     search_field = driver.find_element_by_id("com.google.android.youtube:id/search_edit_text")
     assert search_field.is_displayed()
-    print("✅ TAP test passed")
+    print("tap test passed")
 
-# 2️⃣ DOUBLE TAP тест
+
 def test_double_tap_video(driver):
     time.sleep(5)
     first_video = driver.find_element_by_id("com.google.android.youtube:id/thumbnail")
@@ -50,9 +50,9 @@ def test_double_tap_video(driver):
     actions.pointer_action.pause(0.1)
     actions.pointer_action.click()
     actions.perform()
-    print("✅ DOUBLE TAP test passed")
+    print("double tap test passed")
 
-# 3️⃣ LONG PRESS тест
+
 def test_long_press_video(driver):
     time.sleep(5)
     first_video = driver.find_element_by_id("com.google.android.youtube:id/thumbnail")
@@ -66,9 +66,9 @@ def test_long_press_video(driver):
     time.sleep(2)
     save_option = driver.find_element_by_xpath("//*[contains(@text, 'Save') or contains(@text, 'Сохранить')]")
     assert save_option.is_displayed()
-    print("✅ LONG PRESS test passed")
+    print("long press test passed")
 
-# 4️⃣ SWIPE тест
+
 def test_swipe_up(driver):
     time.sleep(5)
     screen_size = driver.get_window_size()
@@ -76,9 +76,9 @@ def test_swipe_up(driver):
     start_y = screen_size['height'] * 3 // 4
     end_y = screen_size['height'] // 4
     driver.swipe(start_x, start_y, start_x, end_y, 800)
-    print("✅ SWIPE test passed")
+    print("swipe test passed")
 
-# 5️⃣ PINCH тест
+
 def test_pinch_video(driver):
     time.sleep(5)
     first_video = driver.find_element_by_id("com.google.android.youtube:id/thumbnail")
@@ -86,4 +86,4 @@ def test_pinch_video(driver):
     time.sleep(5)
     video_player = driver.find_element_by_id("com.google.android.youtube:id/player_view")
     driver.pinch(element=video_player)
-    print("✅ PINCH test passed")
+    print("pinch test passed")
