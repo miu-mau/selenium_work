@@ -101,8 +101,7 @@ def setup(driver, pages, page_to_open):
         admin_page.navigate_to_admin("https://demo-opencart.ru/admin/index.php")
     elif page_to_open == "internet":
         driver.get("https://the-internet.herokuapp.com")
-
-# @pytest.fixture(scope="module", autouse=True)
-# def setup(driver, pages):
-#     home_page, _, _, _, _ = pages
-#     home_page.navigate_to_product("https://demo-opencart.ru/index.php")
+    if page_to_open == "loc":
+        home_page.navigate_to_product("http://localhost:8082")
+    elif page_to_open == "loc_admin":
+        admin_page.navigate_to_admin("http://localhost:8082/admin")

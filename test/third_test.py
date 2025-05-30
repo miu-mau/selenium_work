@@ -2,6 +2,8 @@ import time
 import pytest
 from selenium.webdriver.common.by import By
 
+
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 @pytest.mark.parametrize("email, password", [("lala@gmail.com", "password")])
 def test_login(pages, email, password):
     home_page, _, _, login_page, _ = pages
@@ -15,7 +17,7 @@ def test_login(pages, email, password):
     home_page.click_logo()
 
 
-
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_macbook_to_wishlist(pages):
     home_page, product_page, _, _, _ = pages
     home_page.scroll_down(300)
@@ -32,6 +34,7 @@ def test_add_macbook_to_wishlist(pages):
     home_page.click_logo()
 
 
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_canon_to_cart(pages):
     home_page, product_page, _, _, _ = pages
     home_page.click_logo()
@@ -52,6 +55,7 @@ def test_add_canon_to_cart(pages):
     time.sleep(1)
 
 
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_samsung_tablet_to_cart(pages):
     home_page, _, _, _, _ = pages
     home_page.click_catalog("tablet")
@@ -69,6 +73,7 @@ def test_add_samsung_tablet_to_cart(pages):
     home_page.scroll_up(0)
 
 
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_htc_to_cart(pages):
     home_page, _, _, _, _ = pages
     home_page.click_catalog("smartphone")
@@ -87,6 +92,7 @@ def test_add_htc_to_cart(pages):
     home_page.scroll_up(0)
 
 
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_write_review_for_iphone(pages):
     home_page, product_page, review_page, _, _ = pages
     home_page.click_catalog("smartphone")   

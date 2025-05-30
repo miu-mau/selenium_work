@@ -1,9 +1,11 @@
 import allure
 import time
+import pytest
 from selenium.webdriver.common.by import By
 
 @allure.feature("User  Authentication")
 @allure.title("User  Login")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_login(pages):
     home_page, _, _, login_page, _ = pages
     login_page.login("lala@gmail.com", "password")
@@ -17,6 +19,7 @@ def test_login(pages):
 
 @allure.feature("Wishlist")
 @allure.title("Add MacBook to Wishlist")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_macbook_to_wishlist(pages):
     home_page, product_page, _, _, _ = pages
     home_page.scroll_down(300)
@@ -34,6 +37,7 @@ def test_add_macbook_to_wishlist(pages):
 @allure.feature("Shopping Cart")
 @allure.story("Add Canon to Cart")
 @allure.title("Add Canon EOS 5D to Cart")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_canon_to_cart(pages):
     home_page, product_page, _, _, _ = pages
     home_page.click_logo()
@@ -56,6 +60,7 @@ def test_add_canon_to_cart(pages):
 @allure.feature("Shopping Cart")
 @allure.story("Add Samsung Tablet to Cart")
 @allure.title("Add Samsung Galaxy Tab 10.1 to Cart")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_samsung_tablet_to_cart(pages):
     home_page, _, _, _, _  = pages
     home_page.click_catalog("tablet")
@@ -75,6 +80,7 @@ def test_add_samsung_tablet_to_cart(pages):
 @allure.feature("Shopping Cart")
 @allure.story("Add HTC to Cart")
 @allure.title("Add HTC Touch HD to Cart")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_add_htc_to_cart(pages):
     home_page, _, _, _, _ = pages
     home_page.click_catalog("smartphone")
@@ -96,6 +102,7 @@ def test_add_htc_to_cart(pages):
 @allure.feature("Review")
 @allure.story("Write Review for iPhone")
 @allure.title("Write a review for iPhone")
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_write_review_for_iphone(pages):
     home_page, product_page, review_page, _, _ = pages
     home_page.click_catalog("smartphone")   

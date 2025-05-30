@@ -2,7 +2,7 @@ import time
 import pytest
 from selenium.webdriver.common.by import By
 
-@pytest.mark.parametrize("page_to_open", ["admin"], indirect=True)
+@pytest.mark.parametrize("page_to_open", ["loc_admin"], indirect=True)
 def test_add_Devices_in_Catalog(pages):
     _, _, _, _, admin_page = pages
     admin_page.login("user", "bitnami")
@@ -28,7 +28,7 @@ def test_add_Devices_in_Catalog(pages):
 
 
 
-@pytest.mark.parametrize("page_to_open", ["admin"], indirect=True)
+@pytest.mark.parametrize("page_to_open", ["loc_admin"], indirect=True)
 def test_add_new_product(pages):
     _, _, _, _, admin_page = pages
     admin_page.login("user", "bitnami")
@@ -54,7 +54,7 @@ def test_add_new_product(pages):
 
 
 
-@pytest.mark.parametrize("page_to_open", ["home"], indirect=True)
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_watch_new_product(pages):
     home_page, _, _, _, _ = pages
     time.sleep(5)
@@ -67,7 +67,7 @@ def test_watch_new_product(pages):
 
 
 
-@pytest.mark.parametrize("page_to_open", ["admin"], indirect=True)
+@pytest.mark.parametrize("page_to_open", ["loc_admin"], indirect=True)
 def test_delete_product(pages):
     _, _, _, _, admin_page = pages
     admin_page.login("user", "bitnami")
@@ -94,7 +94,7 @@ def test_delete_product(pages):
 
     time.sleep(1)
 
-@pytest.mark.parametrize("page_to_open", ["home"], indirect=True)
+@pytest.mark.parametrize("page_to_open", ["loc"], indirect=True)
 def test_watch_product_again(pages):
     home_page, _, _, _, _ = pages
     time.sleep(1)
